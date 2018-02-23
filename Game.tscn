@@ -1,13 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://Interactable.tscn" type="PackedScene" id=4]
 
 [node name="Node" type="Node" index="0"]
 
 [node name="TileMap" type="TileMap" parent="." index="0"]
 
-position = Vector2( 1.50732, 0 )
+position = Vector2( 0.772278, -1.73511 )
 mode = 0
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 64, 64 )
@@ -24,14 +26,72 @@ collision_layer = 1
 collision_mask = 1
 occluder_light_mask = 1
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 65536, 0, 0, 65551, 0, 0, 131072, 0, 0, 131087, 0, 0, 196608, 0, 0, 196623, 0, 0, 262144, 0, 0, 262159, 0, 0, 327680, 0, 0, 327695, 0, 0, 393216, 0, 0, 393231, 0, 0, 458752, 0, 0, 458767, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0 )
+tile_data = PoolIntArray( -196605, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 65536, 0, 0, 65551, 0, 0, 131072, 0, 0, 131087, 0, 0, 196608, 0, 0, 196623, 0, 0, 262144, 0, 0, 262159, 0, 0, 327680, 0, 0, 327695, 0, 0, 393216, 0, 0, 393231, 0, 0, 458752, 0, 0, 458767, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0 )
 _sections_unfolded = [ "Cell" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Player" parent="." index="1" instance=ExtResource( 2 )]
 
-position = Vector2( 440.143, 248.711 )
-moveSpeed = 500
-jumpHeight = 800
+position = Vector2( 102.143, 473.711 )
+moveSpeed = 120
 gravity = 1700
 
+[node name="icon" type="Sprite" parent="." index="2"]
 
+editor/display_folded = true
+position = Vector2( 620.526, 387.849 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Material" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Interactable" parent="icon" index="0" instance=ExtResource( 4 )]
+
+position = Vector2( 0, -0.735077 )
+
+[node name="IndicatorPosition" parent="icon/Interactable" index="0"]
+
+editor/display_folded = true
+position = Vector2( -8.73877, -56.0073 )
+
+[node name="Collision" parent="icon/Interactable" index="1"]
+
+polygon = PoolVector2Array( -42.7069, -22.9584, -79.1478, 105.881, 118.909, 56.5868, 107.466, -44.2022 )
+
+[node name="Camera2D" type="Camera2D" parent="." index="3"]
+
+position = Vector2( 246.701, 434.207 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 0.5, 0.5 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+
+[node name="icon2" type="Sprite" parent="." index="4"]
+
+position = Vector2( 108.63, 484.389 )
+scale = Vector2( 1.40122, 0.369271 )
+texture = ExtResource( 3 )
+
+
+[editable path="icon/Interactable"]

@@ -5,9 +5,9 @@ extends KinematicBody2D
 # var b = "textvar"
 
 export(int) var moveSpeed = 100
-export(int) var jumpHeight = 1000
 export(int) var gravity = 500
 
+onready var image = $Image
 var velocity = Vector2()
 
 func _physics_process(delta):
@@ -15,17 +15,22 @@ func _physics_process(delta):
 	
 	if Input.is_key_pressed(KEY_A):
 		velocity.x = -moveSpeed
+		image.flip_h = true
+		image.play("Walk")
 	elif Input.is_key_pressed(KEY_D):
 		velocity.x = moveSpeed
+		image.play("Walk")
+		image.flip_h = false
 	else:
 		velocity.x = 0
+		image.play("Idle")
 	
 	move_and_slide(velocity, Vector2(0, -1))
 	if is_on_floor():
 		velocity.y = 0
 		
-		if Input.is_key_pressed(KEY_SPACE):
-			velocity.y = -jumpHeight
+		#if Input.is_key_pressed(KEY_SPACE):
+		#	velocity.y = -jumpHeight
 			
 	if is_on_ceiling():
 		velocity.y = 0

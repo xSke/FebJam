@@ -1,0 +1,32 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/Main Character Concept.png-64fc2f3a0ab96d5074b049d3db4d240a.stex"
+
+[deps]
+
+source_file="res://Assets/Art/Export/Concepts/Main Character Concept.png"
+source_md5="c5731526d63d41b4fe1ba6e841e5d3df"
+
+dest_files=[ "res://.import/Main Character Concept.png-64fc2f3a0ab96d5074b049d3db4d240a.stex" ]
+dest_md5="0eff91e463bc12bc0ff1876c5bedf706"
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0
