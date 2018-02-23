@@ -1,11 +1,112 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://icon.png" type="Texture" id=3]
 [ext_resource path="res://Interactable.tscn" type="PackedScene" id=4]
 
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends Node
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	$AnimationPlayer.play(\"Initial\")
+	pass
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
+[sub_resource type="Animation" id=1]
+
+resource_name = "Initial"
+length = 2.75
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Player:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 2.3, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 93.4967, 460.202 ), Vector2( 93.4967, 460.202 ), Vector2( 157.843, 459.387 ), Vector2( 174.948, 479.75 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Player:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2, 2.3, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ -90.0387, -90.0387, -90.0387, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Thrown Lamp:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1, 1.4, 1.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 539.898, 422.325 ), Vector2( 539.898, 422.325 ), Vector2( 91.1041, 398.704 ), Vector2( 91.1041, 398.704 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Thrown Lamp:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1, 1.4, 1.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ -90.0387, -90.0387, -500.0, -500.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Thrown Lamp:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1.4, 1.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.671107, 0.671107 ), Vector2( 0.671107, 0.671107 ), Vector2( 2.05743, 2.05743 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Thrown Lamp:self_modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1.4, 1.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
 [node name="Node" type="Node" index="0"]
+
+script = SubResource( 2 )
 
 [node name="TileMap" type="TileMap" parent="." index="0"]
 
@@ -26,7 +127,7 @@ collision_layer = 1
 collision_mask = 1
 occluder_light_mask = 1
 format = 1
-tile_data = PoolIntArray( -196605, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 65536, 0, 0, 65551, 0, 0, 131072, 0, 0, 131087, 0, 0, 196608, 0, 0, 196623, 0, 0, 262144, 0, 0, 262159, 0, 0, 327680, 0, 0, 327695, 0, 0, 393216, 0, 0, 393231, 0, 0, 458752, 0, 0, 458767, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0 )
+tile_data = PoolIntArray( -196605, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 65536, 0, 0, 65551, 0, 0, 131072, 0, 0, 131087, 0, 0, 196608, 0, 0, 196623, 0, 0, 262144, 0, 0, 262159, 0, 0, 327680, 0, 0, 327695, 0, 0, 393216, 0, 0, 393231, 0, 0, 458752, 0, 0, 458756, 0, 0, 458767, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0 )
 _sections_unfolded = [ "Cell" ]
 __meta__ = {
 "_edit_lock_": true
@@ -34,7 +135,8 @@ __meta__ = {
 
 [node name="Player" parent="." index="1" instance=ExtResource( 2 )]
 
-position = Vector2( 102.143, 473.711 )
+position = Vector2( 174.948, 479.75 )
+_sections_unfolded = [ "Transform", "Z Index", "collision" ]
 moveSpeed = 120
 gravity = 1700
 
@@ -92,6 +194,25 @@ editor_draw_drag_margin = false
 position = Vector2( 108.63, 484.389 )
 scale = Vector2( 1.40122, 0.369271 )
 texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Initial = SubResource( 1 )
+blend_times = [  ]
+
+[node name="Thrown Lamp" type="Sprite" parent="." index="6"]
+
+self_modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 91.1041, 398.704 )
+rotation = -8.72665
+scale = Vector2( 2.05743, 2.05743 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Visibility" ]
 
 
 [editable path="icon/Interactable"]
