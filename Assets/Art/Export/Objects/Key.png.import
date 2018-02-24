@@ -10,7 +10,7 @@ source_file="res://Assets/Art/Export/Objects/Key.png"
 source_md5="23091afbadaa31ea3553ddf33784571c"
 
 dest_files=[ "res://.import/Key.png-68bb64198762e14ad458b3083bef5a38.stex" ]
-dest_md5="bc81ad9ccdc11c22d38acb11964369db"
+dest_md5="2ba55c7397e2c3d6dd7c0d268d88dc27"
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

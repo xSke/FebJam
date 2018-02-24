@@ -10,7 +10,7 @@ source_file="res://Assets/Art/Export/Objects/Soap.png"
 source_md5="95ab26a0f58e1733fed80ed2067eace3"
 
 dest_files=[ "res://.import/Soap.png-c734231d679f325c7e83c84dd4e5bf26.stex" ]
-dest_md5="5430dda42eb3b789bbb7b00deb40eb06"
+dest_md5="7ab66f626f1aaf1b28adb694a21dc54c"
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

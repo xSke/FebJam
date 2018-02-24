@@ -4,7 +4,7 @@ extends KinematicBody2D
 # var a = 2
 # var b = "textvar"
 
-export(bool) var moveable = true
+export(bool) onready var moveable = true setget set_moveable
 export(int) var moveSpeed = 100
 export(int) var gravity = 500
 export var flipped = false
@@ -46,3 +46,8 @@ func _physics_process(delta):
 			
 	if is_on_ceiling():
 		velocity.y = 0
+		
+func set_moveable(new):
+	if not new and image:
+		image.play("Idle")
+	moveable = new

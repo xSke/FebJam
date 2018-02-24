@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Brush.png-5e4ab72cd3af1bfa2eddabfb7d950333.stex"
+path="res://.import/Chest Open Front.png-4c4c8686fc4aced0b35f0fa8003f6a31.stex"
 
 [deps]
 
-source_file="res://Assets/Art/Export/Objects/Brush.png"
-source_md5="5f1174a1d147b73bac32d25a93018932"
+source_file="res://Assets/Art/Export/Furniture/Chest Open Front.png"
+source_md5="cb01e9d709507528bc0a6c4c152c1614"
 
-dest_files=[ "res://.import/Brush.png-5e4ab72cd3af1bfa2eddabfb7d950333.stex" ]
-dest_md5="78de9f46ae06582d2036de98c46bd315"
+dest_files=[ "res://.import/Chest Open Front.png-4c4c8686fc4aced0b35f0fa8003f6a31.stex" ]
+dest_md5="5d53dadb63b18b286fb8ea809d0daf67"
 
 [params]
 
