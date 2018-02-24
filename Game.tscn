@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Hallway.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Bedroom.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Bathroom.tscn" type="PackedScene" id=4]
 
 [sub_resource type="GDScript" id=1]
 
@@ -15,7 +16,7 @@ script/source = "extends Node
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	$AnimationPlayer.play(\"StartCutscene\")
+	# $AnimationPlayer.play(\"StartCutscene\")
 	pass
 
 #func _process(delta):
@@ -117,15 +118,14 @@ tracks/6/keys = {
 "values": [ false, true ]
 }
 
-[node name="Node" type="Node" index="0"]
+[node name="Node" type="Node"]
 
 script = SubResource( 1 )
 
 [node name="Player" parent="." index="0" instance=ExtResource( 1 )]
 
 editor/display_folded = true
-position = Vector2( 18.7058, 580.763 )
-rotation = -1.57147
+position = Vector2( 554, 581 )
 z_index = 10
 collision_layer = 2
 _sections_unfolded = [ "Collision", "Material", "Transform", "Visibility", "Z Index" ]
@@ -181,9 +181,7 @@ color = Color( 1, 1, 1, 1 )
 
 editor/display_folded = true
 
-[node name="Thrown Book" parent="Bedroom" index="3"]
-
-angular_velocity = 0.0
+[node name="Bathroom" parent="." index="5" instance=ExtResource( 4 )]
 
 
 [editable path="Bedroom"]

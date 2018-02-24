@@ -10,7 +10,7 @@ source_file="res://Assets/Art/Export/Furniture/Sink_16.png"
 source_md5="cc3c71ff96c10f902435e465d7a173dd"
 
 dest_files=[ "res://.import/Sink_16.png-81760f15e1844456c0bbe74373eeaa33.stex" ]
-dest_md5="cfd51f9df74993049c5f4f7da52b0148"
+dest_md5="88a3ca0bdfa912186ec3472821725c17"
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

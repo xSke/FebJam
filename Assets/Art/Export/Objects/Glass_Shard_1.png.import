@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Sink_2.png-787c299a37009f9fb2d89714a9b16288.stex"
+path="res://.import/Glass_Shard_1.png-48ab258a5f193931baa02332638ba8c8.stex"
 
 [deps]
 
-source_file="res://Assets/Art/Export/Furniture/Sink_2.png"
-source_md5="a8f8800d42008e9c52047c46e56163e9"
+source_file="res://Assets/Art/Export/Objects/Glass_Shard_1.png"
+source_md5="526cb4b57a420fee822112ed860fd431"
 
-dest_files=[ "res://.import/Sink_2.png-787c299a37009f9fb2d89714a9b16288.stex" ]
-dest_md5="bdd7690424d56fe67901b510f6fe1ce2"
+dest_files=[ "res://.import/Glass_Shard_1.png-48ab258a5f193931baa02332638ba8c8.stex" ]
+dest_md5="b8f9dbaf65d6c9be235408c54ec386e6"
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

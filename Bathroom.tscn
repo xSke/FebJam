@@ -1,0 +1,223 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://Assets/Art/Export/Rooms/Bathroom.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Art/Export/Objects/Key.png" type="Texture" id=2]
+[ext_resource path="res://Interactable.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_2.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_3.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_4.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_5.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_6.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_7.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_8.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_9.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_10.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_11.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_12.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_13.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_14.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_15.png" type="Texture" id=17]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_16.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_17.png" type="Texture" id=19]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_18.png" type="Texture" id=20]
+[ext_resource path="res://Assets/Art/Export/Furniture/Sink_1.png" type="Texture" id=21]
+
+[sub_resource type="GDScript" id=4]
+
+script/source = "extends RigidBody2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	$Interactable.connect(\"interacted\", self, \"_i\")
+
+func _i():
+	Vars.hasKey2 = true
+	get_parent().remove_child(self)
+	queue_free()
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
+[sub_resource type="SpriteFrames" id=1]
+
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ) ],
+"loop": false,
+"name": "On",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 21 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+} ]
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends AnimatedSprite
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	$Interactable.connect(\"interacted\", self, \"_i\")
+	
+func _i():
+	$Interactable.interactable = false
+	play(\"On\")
+	
+	#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
+[sub_resource type="GDScript" id=3]
+
+script/source = "extends RigidBody2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+onready var key = $\"../Key\"
+
+func _ready():
+	connect(\"body_entered\", self, \"_e\")
+	
+func _e(body):
+	key.apply_impulse(Vector2(0, 0), body.linear_velocity * 0.3)
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
+[node name="Bathroom" type="Node" index="0" groups=[
+"player",
+]]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="0"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="Bathroom" type="Sprite" parent="StaticBody2D" index="0"]
+
+position = Vector2( 656, 550 )
+texture = ExtResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" index="1"]
+
+build_mode = 0
+polygon = PoolVector2Array( 529, 592, 776, 592, 776, 595, 529, 595 )
+
+[node name="Key" type="RigidBody2D" parent="." index="1"]
+
+position = Vector2( 750, 547 )
+input_pickable = false
+collision_layer = 8
+collision_mask = 1
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = SubResource( 4 )
+_sections_unfolded = [ "Collision" ]
+
+[node name="Key" type="Sprite" parent="Key" index="0"]
+
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Key" index="1"]
+
+build_mode = 0
+polygon = PoolVector2Array( -4, -2, 4, -2, 4, 2, -4, 2, -4, -2 )
+
+[node name="Interactable" parent="Key" index="2" instance=ExtResource( 3 )]
+
+[node name="IndicatorPosition" parent="Key/Interactable" index="0"]
+
+position = Vector2( 0, -17 )
+
+[node name="Collision" parent="Key/Interactable" index="1"]
+
+polygon = PoolVector2Array( -5, -3, 7, -3, 7, 2, -7, 2, -7, -3 )
+
+[node name="Sink" type="AnimatedSprite" parent="." index="2"]
+
+editor/display_folded = true
+position = Vector2( 678, 579 )
+frames = SubResource( 1 )
+animation = "Idle"
+script = SubResource( 2 )
+
+[node name="Interactable" parent="Sink" index="0" instance=ExtResource( 3 )]
+
+[node name="IndicatorPosition" parent="Sink/Interactable" index="0"]
+
+position = Vector2( 0, -24 )
+
+[node name="Collision" parent="Sink/Interactable" index="1"]
+
+polygon = PoolVector2Array( -12, -13, 13, -13, 13, 12, -12, 13 )
+
+[node name="Shelf" type="RigidBody2D" parent="." index="3"]
+
+editor/display_folded = true
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+mode = 3
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 100
+contact_monitor = true
+sleeping = false
+can_sleep = false
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = SubResource( 3 )
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Shelf" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 733, 549, 757, 549, 757, 550, 733, 550 )
+
+
+[editable path="Key/Interactable"]
+[editable path="Sink/Interactable"]
