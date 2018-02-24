@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=1]
 
 script/source = "extends Area2D
 
@@ -10,18 +10,21 @@ signal interacted
 # var a = 2
 # var b = \"textvar\"
 
+export(bool) var interactable = true setget _set_interactable
 onready var popup = get_node(\"IndicatorPosition/Indicator\")
+
+var showing = false
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	connect(\"body_entered\", self, \"_body_entered\")
-	connect(\"body_exited\", self, \"_body_exited\")
+	connect(\"body_exited\", self, \"	_body_exited\")
 	
 	popup.self_modulate.a = 0
 	
 func _process(delta):
-	if Input.is_action_just_pressed(\"interact\"):
+	if interactable and Input.is_action_just_pressed(\"interact\"):
 		for body in get_overlapping_bodies():
 			if body.is_in_group(\"player\"):
 				emit_signal(\"interacted\")
@@ -33,12 +36,20 @@ func _process(delta):
 #	pass
 
 func _body_entered(body):
-	if body.is_in_group(\"player\"):
+	if interactable and body.is_in_group(\"player\"):
 		popup.get_node(\"AnimationPlayer\").play(\"In\")
+		showing = true
 		
 func _body_exited(body):
-	if body.is_in_group(\"player\"):
-		popup.get_node(\"AnimationPlayer\").play(\"Out\")"
+	if interactable and body.is_in_group(\"player\"):
+		popup.get_node(\"AnimationPlayer\").play(\"Out\")
+		showing = false
+		
+func _set_interactable(new):
+	if not new and showing:
+		popup.get_node(\"AnimationPlayer\").play(\"Out\")
+		showing = false
+	interactable = new"
 
 [sub_resource type="Animation" id=2]
 
@@ -78,7 +89,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[node name="Interactable" type="Area2D" index="0"]
+[node name="Interactable" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -87,10 +98,11 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-script = SubResource( 4 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
+interactable = true
 
 [node name="IndicatorPosition" type="Node2D" parent="." index="0"]
 
@@ -110,7 +122,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-text = "[X]"
+text = "[E]"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0

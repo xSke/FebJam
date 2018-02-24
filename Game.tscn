@@ -1,11 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://icon.png" type="Texture" id=3]
 [ext_resource path="res://Interactable.tscn" type="PackedScene" id=4]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 
 script/source = "extends Node
 
@@ -25,9 +25,62 @@ func _ready():
 #	pass
 "
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="GDScript" id=2]
 
-resource_name = "Initial"
+script/source = "extends Sprite
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	$Interactable.connect(\"interacted\", self, \"_interacted\")
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+
+func _interacted():
+	$Interactable.interactable = false
+	$AnimationPlayer.play(\"Open\")
+	Vars.hasKey = true"
+
+[sub_resource type="Animation" id=3]
+
+resource_name = "Open"
+length = 0.5
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 514.155, 478.708 ), Vector2( 514.155, 444.026 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 2.08382 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+
 length = 2.75
 loop = false
 step = 0.1
@@ -103,10 +156,145 @@ tracks/5/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("Player:moveable")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 2.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="GDScript" id=5]
+
+script/source = "extends Node2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	$Interactable.connect(\"interacted\", self, \"_interacted\")
+	pass
+
+var opened = false
+func _process(delta):
+	$Interactable.interactable = Vars.hasKey and not opened
+
+func _interacted():
+	$Interactable.interactable = false
+	opened = true
+	$AnimationPlayer.play(\"Open\")"
+
+[sub_resource type="Animation" id=6]
+
+resource_name = "Open"
+length = 0.3
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 972.227, 478.568 ), Vector2( 972.227, 541.855 ) ]
+}
+
+[sub_resource type="GDScript" id=7]
+
+script/source = "extends CanvasItem
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textva
+export(int) var throwSpeed = 500
+
+var held = false
+var holdPoint
+var player
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	$Interactable.connect(\"interacted\", self, \"_interacted\")
+	
+func _interacted():
+	player = get_tree().get_nodes_in_group(\"player\")[0]
+	var xform = get_parent().global_transform
+	
+	get_parent().get_parent().remove_child(get_parent())
+	player.add_child(get_parent())
+	
+	get_parent().global_transform = xform
+	holdPoint = player.find_node(\"HoldPoint\")
+	
+	held = true
+	
+	$Interactable.interactable = false
+	get_parent().mode = RigidBody2D.MODE_KINEMATIC
+	
+func _process(delta):
+	if held:
+		get_parent().global_rotation_degrees = 0
+		get_parent().position = holdPoint.position
+		get_parent().position.x *= -1 if player.flipped else 1
+		get_parent().scale.x = -1 if player.flipped else 1
+		update()
+		
+		if Input.is_action_just_pressed(\"interact\"):
+			throw()
+			
+func _draw():
+	if held:
+		var v = throw_vector() * 100
+		if player.flipped:
+			v.x = -v.x
+			
+		draw_line(Vector2(0, 0), v, Color(\"#ff8888\"), 2, true)
+	print(\"drawin\")
+	
+func throw_vector():
+	var mousePos = player.get_local_mouse_position()
+	mousePos = mousePos - get_parent().position
+	return mousePos.normalized()
+	
+func throw():
+	var vec = throw_vector() * throwSpeed
+	
+	var xf = get_parent().global_transform
+	var scene = get_tree().current_scene
+	
+	get_parent().get_parent().remove_child(get_parent())
+	scene.add_child(get_parent())
+	
+	held = false
+	$Interactable.interactable = true
+	
+	get_parent().global_transform = xf
+	get_parent().mode = RigidBody2D.MODE_RIGID
+	get_parent().linear_velocity = vec
+	
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
 
 [node name="Node" type="Node" index="0"]
 
-script = SubResource( 2 )
+script = SubResource( 1 )
 
 [node name="TileMap" type="TileMap" parent="." index="0"]
 
@@ -127,7 +315,7 @@ collision_layer = 1
 collision_mask = 1
 occluder_light_mask = 1
 format = 1
-tile_data = PoolIntArray( -196605, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 65536, 0, 0, 65551, 0, 0, 131072, 0, 0, 131087, 0, 0, 196608, 0, 0, 196623, 0, 0, 262144, 0, 0, 262159, 0, 0, 327680, 0, 0, 327695, 0, 0, 393216, 0, 0, 393231, 0, 0, 458752, 0, 0, 458756, 0, 0, 458767, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0 )
+tile_data = PoolIntArray( -196605, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 65536, 0, 0, 65551, 0, 0, 131072, 0, 0, 131087, 0, 0, 196608, 0, 0, 196623, 0, 0, 262144, 0, 0, 262159, 0, 0, 327680, 0, 0, 327695, 0, 0, 393216, 0, 0, 393231, 0, 0, 458752, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0 )
 _sections_unfolded = [ "Cell" ]
 __meta__ = {
 "_edit_lock_": true
@@ -136,36 +324,15 @@ __meta__ = {
 [node name="Player" parent="." index="1" instance=ExtResource( 2 )]
 
 position = Vector2( 174.948, 479.75 )
-_sections_unfolded = [ "Transform", "Z Index", "collision" ]
+collision_layer = 2
+_sections_unfolded = [ "Collision", "Material", "Transform", "Z Index" ]
 moveSpeed = 120
 gravity = 1700
 
-[node name="icon" type="Sprite" parent="." index="2"]
+[node name="Camera2D" type="Camera2D" parent="Player" index="2"]
 
-editor/display_folded = true
-position = Vector2( 620.526, 387.849 )
-texture = ExtResource( 3 )
-_sections_unfolded = [ "Material" ]
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Interactable" parent="icon" index="0" instance=ExtResource( 4 )]
-
-position = Vector2( 0, -0.735077 )
-
-[node name="IndicatorPosition" parent="icon/Interactable" index="0"]
-
-editor/display_folded = true
-position = Vector2( -8.73877, -56.0073 )
-
-[node name="Collision" parent="icon/Interactable" index="1"]
-
-polygon = PoolVector2Array( -42.7069, -22.9584, -79.1478, 105.881, 118.909, 56.5868, 107.466, -44.2022 )
-
-[node name="Camera2D" type="Camera2D" parent="." index="3"]
-
-position = Vector2( 246.701, 434.207 )
+position = Vector2( 23.9178, -15.1809 )
+scale = Vector2( 0.333333, 0.333333 )
 anchor_mode = 1
 rotating = false
 current = true
@@ -189,23 +356,58 @@ editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
 
-[node name="icon2" type="Sprite" parent="." index="4"]
+[node name="Chest" type="Sprite" parent="." index="2"]
 
-position = Vector2( 108.63, 484.389 )
-scale = Vector2( 1.40122, 0.369271 )
+position = Vector2( 514.155, 444.026 )
+scale = Vector2( 1, 2.08382 )
 texture = ExtResource( 3 )
+script = SubResource( 2 )
+_sections_unfolded = [ "Material" ]
+__meta__ = {
+"_edit_group_": true
+}
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+[node name="Interactable" parent="Chest" index="0" instance=ExtResource( 4 )]
+
+editor/display_folded = true
+position = Vector2( 0, -0.735077 )
+
+[node name="IndicatorPosition" parent="Chest/Interactable" index="0"]
+
+editor/display_folded = true
+position = Vector2( -8.73877, -56.0073 )
+
+[node name="Collision" parent="Chest/Interactable" index="1"]
+
+polygon = PoolVector2Array( -39.7347, -30.7142, -43.2557, 31.784, 45.2099, 30.9037, 43.8895, -33.7951 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Chest" index="1"]
 
 root_node = NodePath("..")
 autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/Initial = SubResource( 1 )
+anims/Open = SubResource( 3 )
 blend_times = [  ]
 
-[node name="Thrown Lamp" type="Sprite" parent="." index="6"]
+[node name="Bed" type="Sprite" parent="." index="3"]
+
+position = Vector2( 108.63, 484.389 )
+scale = Vector2( 1.40122, 0.369271 )
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Initial = SubResource( 4 )
+blend_times = [  ]
+
+[node name="Thrown Lamp" type="Sprite" parent="." index="5"]
 
 self_modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 91.1041, 398.704 )
@@ -214,5 +416,124 @@ scale = Vector2( 2.05743, 2.05743 )
 texture = ExtResource( 3 )
 _sections_unfolded = [ "Visibility" ]
 
+[node name="Door" type="Node2D" parent="." index="6"]
 
-[editable path="icon/Interactable"]
+editor/display_folded = true
+position = Vector2( 972.227, 478.568 )
+script = SubResource( 5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="DoorImg" type="Sprite" parent="Door" index="0"]
+
+position = Vector2( -0.385803, 0.586365 )
+scale = Vector2( 0.286951, 1 )
+texture = ExtResource( 3 )
+
+[node name="Interactable" parent="Door" index="1" instance=ExtResource( 4 )]
+
+editor/display_folded = true
+
+[node name="Indicator" parent="Door/Interactable/IndicatorPosition" index="0"]
+
+margin_left = -68.0
+margin_top = -60.0
+margin_right = -52.0
+margin_bottom = -46.0
+
+[node name="Collision" parent="Door/Interactable" index="1"]
+
+polygon = PoolVector2Array( -7.55591, -32.1206, 1.70984, -23.5542, -3.36011, 31.5157, -39.0244, 31.6905, -35.5279, -32.1206 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Door" index="2"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Open = SubResource( 6 )
+blend_times = [  ]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Door" index="3"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Door/StaticBody2D" index="0"]
+
+position = Vector2( 1.14014, -0.237854 )
+build_mode = 0
+polygon = PoolVector2Array( -8.83411, -30.2726, 7.18103, -31.3193, 6.62659, 32.2425, -9.54565, 33.1938 )
+
+[node name="ThrowObject" type="RigidBody2D" parent="." index="7"]
+
+position = Vector2( 728.837, 498.245 )
+input_pickable = false
+collision_layer = 4
+collision_mask = 1
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+_sections_unfolded = [ "Collision", "Transform" ]
+
+[node name="Throwable" type="Node2D" parent="ThrowObject" index="0"]
+
+script = SubResource( 7 )
+_sections_unfolded = [ "Transform" ]
+throwSpeed = 500
+
+[node name="Interactable" parent="ThrowObject/Throwable" index="0" instance=ExtResource( 4 )]
+
+collision_mask = 3
+_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
+
+[node name="IndicatorPosition" parent="ThrowObject/Throwable/Interactable" index="0"]
+
+position = Vector2( 1.56476, 22.2285 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Indicator" parent="ThrowObject/Throwable/Interactable/IndicatorPosition" index="0"]
+
+margin_left = -41.0
+margin_top = -85.0
+margin_right = -25.0
+margin_bottom = -71.0
+
+[node name="Collision" parent="ThrowObject/Throwable/Interactable" index="1"]
+
+polygon = PoolVector2Array( -13.1471, -12.6353, 12.6027, -12.9493, 13.7542, 13.2192, -13.3564, 12.6958 )
+
+[node name="icon" type="Sprite" parent="ThrowObject" index="1"]
+
+rotation = -0.831417
+scale = Vector2( 0.43247, 0.43247 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ThrowObject" index="2"]
+
+build_mode = 0
+polygon = PoolVector2Array( -0.647583, -18.1684, -18.5092, 0.633209, 0.613647, 18.2158, 18.0109, -0.3414 )
+_sections_unfolded = [ "Transform" ]
+
+
+[editable path="Chest/Interactable"]
+[editable path="Door/Interactable"]
+[editable path="ThrowObject/Throwable/Interactable"]

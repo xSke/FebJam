@@ -4,23 +4,35 @@ extends KinematicBody2D
 # var a = 2
 # var b = "textvar"
 
+export(bool) var moveable = true
 export(int) var moveSpeed = 100
 export(int) var gravity = 500
+export var flipped = false
 
-onready var image = $Image
+onready var image = $Child/Image
+onready var _scale = self.scale
+
 var velocity = Vector2()
 
 func _physics_process(delta):
+	if not moveable:
+		return
+		
 	velocity.y += delta * gravity
 	
 	if Input.is_key_pressed(KEY_A):
 		velocity.x = -moveSpeed
-		image.flip_h = true
 		image.play("Walk")
+		
+		$Child.scale.x = -1
+		flipped = true
+		
 	elif Input.is_key_pressed(KEY_D):
 		velocity.x = moveSpeed
 		image.play("Walk")
-		image.flip_h = false
+		
+		$Child.scale.x = 1
+		flipped = false
 	else:
 		velocity.x = 0
 		image.play("Idle")
