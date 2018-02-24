@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=1]
 
 script/source = "extends Area2D
 
@@ -10,35 +10,72 @@ signal interacted
 # var a = 2
 # var b = \"textvar\"
 
+export(bool) var interactable = true setget _set_interactable
 onready var popup = get_node(\"IndicatorPosition/Indicator\")
 
+var showing = false
+
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	connect(\"body_entered\", self, \"_body_entered\")
-	connect(\"body_exited\", self, \"_body_exited\")
-	
 	popup.self_modulate.a = 0
 	
 func _process(delta):
-	if Input.is_action_just_pressed(\"interact\"):
+	if interactable:
+		var found_player = false
+		
 		for body in get_overlapping_bodies():
 			if body.is_in_group(\"player\"):
-				emit_signal(\"interacted\")
-				print(\"Interacted\")
+				if Input.is_action_just_pressed(\"interact\"):
+					emit_signal(\"interacted\")
+				found_player = true
+		
+		# Checking again, emit_signal may have changed
+		if interactable:
+			if showing and not found_player:
+				print(\"Player gone, fading out\")
+				popup.get_node(\"AnimationPlayer\").play(\"Out\")
+				showing = false
+			if not showing and found_player:
+				print(\"Found player, fading in\")
+				popup.get_node(\"AnimationPlayer\").play(\"In\")
+				showing = true
+
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
 #	pass
-
-func _body_entered(body):
-	if body.is_in_group(\"player\"):
-		popup.get_node(\"AnimationPlayer\").play(\"In\")
 		
-func _body_exited(body):
-	if body.is_in_group(\"player\"):
-		popup.get_node(\"AnimationPlayer\").play(\"Out\")"
+func _set_interactable(new):
+	if not new and showing:
+		popup.get_node(\"AnimationPlayer\").play(\"Out\")
+		showing = false
+	interactable = new
+	print(\"set_interactable \" + str(new))"
+
+[sub_resource type="GDScript" id=4]
+
+script/source = "extends Node2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+onready var offset = position
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	pass
+	
+func _process(delta):
+	global_position = get_parent().global_position + offset
+	global_rotation = 0
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
 
 [sub_resource type="Animation" id=2]
 
@@ -78,21 +115,28 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[node name="Interactable" type="Area2D" index="0"]
+[node name="Interactable" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+collision_mask = 2
 audio_bus_override = false
 audio_bus_name = "Master"
-script = SubResource( 4 )
+script = SubResource( 1 )
+_sections_unfolded = [ "Collision" ]
 __meta__ = {
 "_edit_group_": true
 }
+interactable = true
 
 [node name="IndicatorPosition" type="Node2D" parent="." index="0"]
+
+z_index = 4096
+script = SubResource( 4 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="Indicator" type="Label" parent="IndicatorPosition" index="0"]
 
@@ -101,16 +145,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -32.0
-margin_top = -32.0
-margin_right = -16.0
-margin_bottom = -18.0
+margin_left = -36.0
+margin_top = -35.0
+margin_right = -20.0
+margin_bottom = -21.0
+rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-text = "[X]"
+text = "[E]"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0

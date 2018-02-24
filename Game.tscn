@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Tileset.tres" type="TileSet" id=1]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
-[ext_resource path="res://Interactable.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Hallway.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Bedroom.tscn" type="PackedScene" id=3]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 
 script/source = "extends Node
 
@@ -16,7 +15,7 @@ script/source = "extends Node
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	$AnimationPlayer.play(\"Initial\")
+	$AnimationPlayer.play(\"StartCutscene\")
 	pass
 
 #func _process(delta):
@@ -25,10 +24,10 @@ func _ready():
 #	pass
 "
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id=4]
 
-resource_name = "Initial"
-length = 2.75
+resource_name = "StartCutscene"
+length = 6.5
 loop = false
 step = 0.1
 tracks/0/type = "value"
@@ -38,10 +37,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 2, 2.3, 2.5 ),
+"times": PoolRealArray( 0, 5, 5.2, 5.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 93.4967, 460.202 ), Vector2( 93.4967, 460.202 ), Vector2( 157.843, 459.387 ), Vector2( 174.948, 479.75 ) ]
+"values": [ Vector2( 18.7058, 580.763 ), Vector2( 18.7058, 580.763 ), Vector2( 21.8529, 573.01 ), Vector2( 25, 575 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Player:rotation_degrees")
@@ -50,131 +49,103 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 2, 2.3, 2.5 ),
+"times": PoolRealArray( 0, 5, 5.2, 5.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ -90.0387, -90.0387, -90.0387, 0.0 ]
+"values": [ -90.0387, -90.0387, -45.0193, 0.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Thrown Lamp:position")
+tracks/2/path = NodePath("CanvasModulate:color")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 1, 1.4, 1.7 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 539.898, 422.325 ), Vector2( 539.898, 422.325 ), Vector2( 91.1041, 398.704 ), Vector2( 91.1041, 398.704 ) ]
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Thrown Lamp:rotation_degrees")
+tracks/3/path = NodePath("Bedroom/Thrown Book:mode")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 1, 1.4, 1.7 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ -90.0387, -90.0387, -500.0, -500.0 ]
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 1, 0 ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Thrown Lamp:scale")
+tracks/4/type = "method"
+tracks/4/path = NodePath("Bedroom/Thrown Book")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 1.4, 1.7 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0.671107, 0.671107 ), Vector2( 0.671107, 0.671107 ), Vector2( 2.05743, 2.05743 ) ]
+"times": PoolRealArray( 2.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ Vector2( 0, 0 ), Vector2( -400, -170 ) ],
+"method": "apply_impulse"
+} ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Thrown Lamp:self_modulate")
+tracks/5/path = NodePath("Bedroom/Thrown Book:angular_velocity")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 1.4, 1.7 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"times": PoolRealArray( 2, 2.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 2,
+"values": [ 0.0, 15.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Player:moveable")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [node name="Node" type="Node" index="0"]
 
-script = SubResource( 2 )
+script = SubResource( 1 )
 
-[node name="TileMap" type="TileMap" parent="." index="0"]
-
-position = Vector2( 0.772278, -1.73511 )
-mode = 0
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 64, 64 )
-cell_quadrant_size = 16
-cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-cell_half_offset = 2
-cell_tile_origin = 0
-cell_y_sort = false
-cell_clip_uv = false
-collision_use_kinematic = false
-collision_friction = 1.0
-collision_bounce = 0.0
-collision_layer = 1
-collision_mask = 1
-occluder_light_mask = 1
-format = 1
-tile_data = PoolIntArray( -196605, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 65536, 0, 0, 65551, 0, 0, 131072, 0, 0, 131087, 0, 0, 196608, 0, 0, 196623, 0, 0, 262144, 0, 0, 262159, 0, 0, 327680, 0, 0, 327695, 0, 0, 393216, 0, 0, 393231, 0, 0, 458752, 0, 0, 458756, 0, 0, 458767, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0 )
-_sections_unfolded = [ "Cell" ]
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Player" parent="." index="1" instance=ExtResource( 2 )]
-
-position = Vector2( 174.948, 479.75 )
-_sections_unfolded = [ "Transform", "Z Index", "collision" ]
-moveSpeed = 120
-gravity = 1700
-
-[node name="icon" type="Sprite" parent="." index="2"]
+[node name="Player" parent="." index="0" instance=ExtResource( 1 )]
 
 editor/display_folded = true
-position = Vector2( 620.526, 387.849 )
-texture = ExtResource( 3 )
-_sections_unfolded = [ "Material" ]
-__meta__ = {
-"_edit_group_": true
-}
+position = Vector2( 18.7058, 580.763 )
+rotation = -1.57147
+z_index = 10
+collision_layer = 2
+_sections_unfolded = [ "Collision", "Material", "Transform", "Visibility", "Z Index" ]
+moveable = false
+moveSpeed = 40
+gravity = 150
 
-[node name="Interactable" parent="icon" index="0" instance=ExtResource( 4 )]
+[node name="Camera2D" type="Camera2D" parent="Player" index="2"]
 
-position = Vector2( 0, -0.735077 )
-
-[node name="IndicatorPosition" parent="icon/Interactable" index="0"]
-
-editor/display_folded = true
-position = Vector2( -8.73877, -56.0073 )
-
-[node name="Collision" parent="icon/Interactable" index="1"]
-
-polygon = PoolVector2Array( -42.7069, -22.9584, -79.1478, 105.881, 118.909, 56.5868, 107.466, -44.2022 )
-
-[node name="Camera2D" type="Camera2D" parent="." index="3"]
-
-position = Vector2( 246.701, 434.207 )
+position = Vector2( 22, 0 )
+scale = Vector2( 0.333333, 0.333333 )
 anchor_mode = 1
 rotating = false
 current = true
-zoom = Vector2( 0.5, 0.5 )
+zoom = Vector2( 0.25, 0.25 )
 limit_left = -10000000
-limit_top = -10000000
+limit_top = 500
 limit_right = 10000000
 limit_bottom = 10000000
-limit_smoothed = false
+limit_smoothed = true
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 smoothing_enabled = false
@@ -188,31 +159,31 @@ drag_margin_bottom = 0.2
 editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
+_sections_unfolded = [ "Limit" ]
 
-[node name="icon2" type="Sprite" parent="." index="4"]
-
-position = Vector2( 108.63, 484.389 )
-scale = Vector2( 1.40122, 0.369271 )
-texture = ExtResource( 3 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 
 root_node = NodePath("..")
 autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/Initial = SubResource( 1 )
+anims/StartCutscene = SubResource( 4 )
 blend_times = [  ]
 
-[node name="Thrown Lamp" type="Sprite" parent="." index="6"]
+[node name="CanvasModulate" type="CanvasModulate" parent="." index="2"]
 
-self_modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 91.1041, 398.704 )
-rotation = -8.72665
-scale = Vector2( 2.05743, 2.05743 )
-texture = ExtResource( 3 )
-_sections_unfolded = [ "Visibility" ]
+color = Color( 1, 1, 1, 1 )
+
+[node name="Hallway" parent="." index="3" instance=ExtResource( 2 )]
+
+[node name="Bedroom" parent="." index="4" instance=ExtResource( 3 )]
+
+editor/display_folded = true
+
+[node name="Thrown Book" parent="Bedroom" index="3"]
+
+angular_velocity = 0.0
 
 
-[editable path="icon/Interactable"]
+[editable path="Bedroom"]

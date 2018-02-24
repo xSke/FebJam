@@ -1,0 +1,411 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://Assets/Art/Export/Rooms/Bedroom.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Art/Export/Objects/Door Front.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_1.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_2.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_3.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_4.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_5.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_6.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_7.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_8.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_9.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_10.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_11.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_12.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_13.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_14.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_15.png" type="Texture" id=17]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_16.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest_Opening_17.png" type="Texture" id=19]
+[ext_resource path="res://Interactable.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Assets/Art/Export/Furniture/Chest Open Front.png" type="Texture" id=21]
+[ext_resource path="res://Assets/Art/Export/Objects/Key.png" type="Texture" id=22]
+[ext_resource path="res://Assets/Art/Export/Furniture/Door_1.png" type="Texture" id=23]
+[ext_resource path="res://Thrown Book.tscn" type="PackedScene" id=24]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends StaticBody2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	$Interactable.connect(\"interacted\", self, \"_i\")
+	pass
+
+func _i():
+	var player = get_tree().get_nodes_in_group(\"player\")[0]
+	player.moveable = false
+	
+	$Sprite.play(\"Open\")
+	yield($Sprite, \"animation_finished\")
+	
+	player.moveable = true
+	
+	$Interactable.interactable = false
+	
+	$Key.visible = true
+	$Key.apply_impulse(Vector2(0, 0), Vector2(50, -120))
+	$Key/Interactable.interactable = true
+	$\"Chest Open Front\".visible = true
+
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
+[sub_resource type="SpriteFrames" id=2]
+
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ) ],
+"loop": false,
+"name": "Open",
+"speed": 10.0
+} ]
+
+[sub_resource type="GDScript" id=3]
+
+script/source = "extends Area2D
+
+signal interacted
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+export(bool) var interactable = true setget _set_interactable
+onready var popup = get_node(\"IndicatorPosition/Indicator\")
+
+var showing = false
+
+func _ready():
+	popup.self_modulate.a = 0
+	
+func _process(delta):
+	if interactable:
+		var found_player = false
+		
+		for body in get_overlapping_bodies():
+			if body.is_in_group(\"player\"):
+				if Input.is_action_just_pressed(\"interact\"):
+					emit_signal(\"interacted\")
+				found_player = true
+		
+		# Checking again, emit_signal may have changed
+		if interactable:
+			if showing and not found_player:
+				print(\"Player gone, fading out\")
+				popup.get_node(\"AnimationPlayer\").play(\"Out\")
+				showing = false
+			if not showing and found_player:
+				print(\"Found player, fading in\")
+				popup.get_node(\"AnimationPlayer\").play(\"In\")
+				showing = true
+
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+		
+func _set_interactable(new):
+	if not new and showing:
+		popup.get_node(\"AnimationPlayer\").play(\"Out\")
+		showing = false
+	interactable = new
+	print(\"set_interactable \" + str(new))"
+
+[sub_resource type="GDScript" id=4]
+
+script/source = "extends RigidBody2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	$Interactable.connect(\"interacted\", self, \"_i\")
+	
+func _i():
+	Vars.hasKey = true
+	
+	queue_free()
+	get_parent().remove_child(self)
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
+[sub_resource type="GDScript" id=5]
+
+script/source = "extends StaticBody2D
+
+var closed = preload(\"res://Assets/Art/Export/Furniture/Door_1.png\")
+var open = preload(\"res://Assets/Art/Export/Furniture/Door_2.png\")
+
+var hasOpened = false
+
+func _ready():
+	$Interactable.connect(\"interacted\", self, \"_i\")
+
+func _process():
+	$Interactable.interactable = Vars.hasKey and not hasOpened
+
+func _i():
+	if hasOpened:
+		return
+		
+	$\"Door Sprite\".texture = open
+	$CollisionPolygon2D.disabled = true
+	
+	hasOpened = true"
+
+[sub_resource type="GDScript" id=7]
+
+script/source = "extends Area2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+var done = false
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	connect(\"body_entered\", self, \"_e\")
+
+func _e(body):
+	if not done and Vars.hasKey and body.is_in_group(\"player\"):
+		done = true
+		body.moveable = false
+		
+		var book = $\"../Thrown Book2\"
+		book.visible = true
+		book.apply_impulse(Vector2(0, 0), Vector2(400, -150))
+		book.angular_velocity = 5
+		print(\"dfgkl;jdfglkjdflg\")
+		
+		yield(get_tree().create_timer(3), \"timeout\")
+		body.moveable = true
+		
+		book.get_node(\"Throwable/Interactable\").interactable = true
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
+[node name="Bedroom" type="Node2D" index="0"]
+
+[node name="Bedroom BG" type="StaticBody2D" parent="." index="0"]
+
+editor/display_folded = true
+position = Vector2( 208, 550 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bedroom BG" index="0"]
+
+visible = false
+build_mode = 0
+polygon = PoolVector2Array( -197, 34, -158, 34, -156, 36, -156, 42, 208, 42, 208, 50, -208, 50, -208, 21, -208, -50, -197, -50 )
+
+[node name="Bedroom" type="Sprite" parent="Bedroom BG" index="1"]
+
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Bedroom BG" index="2"]
+
+visible = false
+build_mode = 0
+polygon = PoolVector2Array( 200, 15, 208, 15, 208, -50, 200, -50 )
+
+[node name="Door Front" type="Sprite" parent="Bedroom BG" index="3"]
+
+position = Vector2( 200, 15 )
+z_index = 100
+texture = ExtResource( 2 )
+centered = false
+_sections_unfolded = [ "Offset", "Z Index" ]
+
+[node name="Chest Body" type="StaticBody2D" parent="." index="1"]
+
+position = Vector2( 211, 582 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+script = SubResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="Chest Body" index="0"]
+
+position = Vector2( 2, 0 )
+frames = SubResource( 2 )
+animation = "Open"
+_sections_unfolded = [ "Transform" ]
+
+[node name="Interactable" parent="Chest Body" index="1" instance=ExtResource( 20 )]
+
+position = Vector2( 1, -18 )
+script = SubResource( 3 )
+
+[node name="IndicatorPosition" parent="Chest Body/Interactable" index="0"]
+
+position = Vector2( 1, 2 )
+
+[node name="Collision" parent="Chest Body/Interactable" index="1"]
+
+polygon = PoolVector2Array( -14, 11, 17, 11, 17, 28, -15, 28, -15, 11 )
+
+[node name="Chest Open Front" type="Sprite" parent="Chest Body" index="2"]
+
+visible = false
+position = Vector2( -15, -11 )
+z_index = 1
+texture = ExtResource( 21 )
+centered = false
+_sections_unfolded = [ "Offset", "Visibility", "Z Index" ]
+
+[node name="Key" type="RigidBody2D" parent="Chest Body" index="3"]
+
+visible = false
+position = Vector2( 2, 5 )
+input_pickable = false
+collision_layer = 4
+collision_mask = 1
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = SubResource( 4 )
+_sections_unfolded = [ "Collision", "Transform", "Visibility" ]
+
+[node name="Sprite" type="Sprite" parent="Chest Body/Key" index="0"]
+
+texture = ExtResource( 22 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Chest Body/Key" index="1"]
+
+build_mode = 0
+polygon = PoolVector2Array( -4, -2, 5, -2, 5, 2, -4, 2 )
+
+[node name="Interactable" parent="Chest Body/Key" index="2" instance=ExtResource( 20 )]
+
+script = SubResource( 3 )
+_sections_unfolded = [ "Collision", "Transform" ]
+interactable = false
+
+[node name="IndicatorPosition" parent="Chest Body/Key/Interactable" index="0"]
+
+position = Vector2( 0, -11 )
+
+[node name="Collision" parent="Chest Body/Key/Interactable" index="1"]
+
+polygon = PoolVector2Array( -5, -3, 5, -4, 5, 3, -6, 3 )
+
+[node name="Door Body" type="StaticBody2D" parent="." index="2"]
+
+position = Vector2( 409, 580 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+script = SubResource( 5 )
+
+[node name="Interactable" parent="Door Body" index="0" instance=ExtResource( 20 )]
+
+script = SubResource( 3 )
+_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
+
+[node name="IndicatorPosition" parent="Door Body/Interactable" index="0"]
+
+position = Vector2( -9, -14 )
+
+[node name="Collision" parent="Door Body/Interactable" index="1"]
+
+polygon = PoolVector2Array( -1, -16, -15, -16, -15, 15, -1, 15 )
+
+[node name="Door Sprite" type="Sprite" parent="Door Body" index="1"]
+
+texture = ExtResource( 23 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Door Body" index="2"]
+
+position = Vector2( -1, 0 )
+build_mode = 0
+polygon = PoolVector2Array( 1, -15, 1, 15, 8, 15, 8, -15 )
+
+[node name="Thrown Book" parent="." index="3" instance=ExtResource( 24 )]
+
+[node name="Thrown Book2" parent="." index="4" instance=ExtResource( 24 )]
+
+visible = false
+
+[node name="Interactable" parent="Thrown Book2/Throwable" index="0"]
+
+interactable = false
+
+[node name="Area2D" type="Area2D" parent="." index="5"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_mask = 2
+audio_bus_override = false
+audio_bus_name = "Master"
+script = SubResource( 7 )
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 404, 594, 381, 594, 382, 539, 404, 538 )
+
+
+[editable path="Chest Body/Interactable"]
+[editable path="Chest Body/Key/Interactable"]
+[editable path="Door Body/Interactable"]
+[editable path="Thrown Book2"]
+[editable path="Thrown Book2/Throwable"]
