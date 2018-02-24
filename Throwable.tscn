@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Interactable.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends CanvasItem
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textva
+export(int) var throwSpeed = 500
+
+var held = false
+var holdPoint
+var player
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	$Interactable.connect(\"interacted\", self, \"_interacted\")
+	
+func _interacted():
+	player = get_tree().get_nodes_in_group(\"player\")[0]
+	var xform = get_parent().global_transform
+	
+	get_parent().get_parent().remove_child(get_parent())
+	player.add_child(get_parent())
+	
+	get_parent().global_transform = xform
+	holdPoint = player.find_node(\"HoldPoint\")
+	
+	held = true
+	
+	$Interactable.interactable = false
+	get_parent().mode = RigidBody2D.MODE_KINEMATIC
+	
+func _process(delta):
+	if held:
+		get_parent().global_rotation_degrees = 0
+		get_parent().position = holdPoint.position
+		get_parent().position.x *= -1 if player.flipped else 1
+		get_parent().scale.x = -1 if player.flipped else 1
+		update()
+		
+		if Input.is_action_just_pressed(\"interact\"):
+			throw()
+			
+func _draw():
+	if held:
+		var v = throw_vector() * 20
+		if player.flipped:
+			v.x = -v.x
+			
+		draw_line(Vector2(0, 0), v, Color(\"#ff8888\"), 2, true)
+	
+func throw_vector():
+	var mousePos = player.get_local_mouse_position()
+	mousePos = mousePos - get_parent().position
+	return mousePos.normalized()
+	
+func throw():
+	var vec = throw_vector() * throwSpeed
+	
+	var xf = get_parent().global_transform
+	var scene = get_tree().current_scene
+	
+	get_parent().get_parent().remove_child(get_parent())
+	scene.add_child(get_parent())
+	
+	held = false
+	$Interactable.interactable = true
+	
+	get_parent().global_transform = xf
+	get_parent().mode = RigidBody2D.MODE_RIGID
+	get_parent().linear_velocity = vec
+	
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
+[node name="Throwable" type="Node2D"]
+
+script = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+throwSpeed = 200
+
+[node name="Interactable" parent="." index="0" instance=ExtResource( 1 )]
+
+

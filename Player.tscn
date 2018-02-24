@@ -40,13 +40,13 @@ script = ExtResource( 1 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 moveable = true
 moveSpeed = 100
-gravity = 500
+gravity = 50
 flipped = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
 
 build_mode = 0
-polygon = PoolVector2Array( -15, -27, 15, -27, 15, 27, -15, 27 )
+polygon = PoolVector2Array( -5, -9, 5, -9, 5, 9, -5, 9 )
 
 [node name="Child" type="Node2D" parent="." index="1"]
 
@@ -54,14 +54,13 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Image" type="AnimatedSprite" parent="Child" index="0"]
 
-scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
 animation = "Idle"
 _sections_unfolded = [ "Transform" ]
 
 [node name="HoldPoint" type="Node2D" parent="Child" index="1"]
 
-position = Vector2( 18, 1 )
+position = Vector2( 7, 1 )
 _sections_unfolded = [ "Transform" ]
 
 

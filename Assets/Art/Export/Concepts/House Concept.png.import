@@ -1,0 +1,32 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/House Concept.png-b52da44a2521f565e74ad1b8090a7099.stex"
+
+[deps]
+
+source_file="res://Assets/Art/Export/Concepts/House Concept.png"
+source_md5="fad64dca8cca1f09bfdaf138c91f9edc"
+
+dest_files=[ "res://.import/House Concept.png-b52da44a2521f565e74ad1b8090a7099.stex" ]
+dest_md5="904ee7da3997c66695a3595d3a2ab1da"
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

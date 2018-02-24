@@ -1,0 +1,32 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/Door Front.png-75c0e46125229073ae39940051dd571c.stex"
+
+[deps]
+
+source_file="res://Assets/Art/Export/Objects/Door Front.png"
+source_md5="7c961846b7aa138a0f890bf83b81bdff"
+
+dest_files=[ "res://.import/Door Front.png-75c0e46125229073ae39940051dd571c.stex" ]
+dest_md5="5ed1d93c9dd4bc6ab33e1c6edc856dde"
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0
