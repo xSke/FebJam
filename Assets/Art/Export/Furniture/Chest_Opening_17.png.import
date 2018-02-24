@@ -10,7 +10,7 @@ source_file="res://Assets/Art/Export/Furniture/Chest_Opening_17.png"
 source_md5="74fbfce8f8ce68d8e16087e77e6a87bb"
 
 dest_files=[ "res://.import/Chest_Opening_17.png-cc9de3daf448c57102d10c95eace1565.stex" ]
-dest_md5="f15a0a46eb202d2704cc89a1718b732c"
+dest_md5="9816e583623dd409381d1d13ef27a226"
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

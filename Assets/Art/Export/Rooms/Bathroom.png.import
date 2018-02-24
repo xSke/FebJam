@@ -7,10 +7,10 @@ path="res://.import/Bathroom.png-1cd53da1f1a924bf1229eb57c09d95c2.stex"
 [deps]
 
 source_file="res://Assets/Art/Export/Rooms/Bathroom.png"
-source_md5="ca37fb76f56844d10f9e3609fa9ed948"
+source_md5="1d49758a0c286d2e93234e9e0a8d6745"
 
 dest_files=[ "res://.import/Bathroom.png-1cd53da1f1a924bf1229eb57c09d95c2.stex" ]
-dest_md5="5de170e24fffb899ba4df4036d0843ac"
+dest_md5="a50dd369af227b99ebdfdf0c0ab1fe7e"
 
 [params]
 

@@ -10,7 +10,7 @@ source_file="res://Assets/Art/Export/Rooms/Hallway.png"
 source_md5="cdbd6b8be7f479c6afd654e74786b395"
 
 dest_files=[ "res://.import/Hallway.png-085d39bef85e116ee542e287f1afa6d6.stex" ]
-dest_md5="0e68f7949762a0845efb6b6e3a82cad3"
+dest_md5="80dfe89504abe7428471777289f8d7ba"
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Chest_Opening_1.png-bf0cbf24b5c873a31570e53c10ef81d1.stex"
+path="res://.import/Sink_18.png-d4b5935030d2a60c3238c95a411fbde3.stex"
 
 [deps]
 
-source_file="res://Assets/Art/Export/Furniture/Chest_Opening_1.png"
-source_md5="55634fe808084b6ca86bd0a3e3b891d5"
+source_file="res://Assets/Art/Export/Furniture/Sink_18.png"
+source_md5="8daf8a315e6c00f03b3f1192e766b6e6"
 
-dest_files=[ "res://.import/Chest_Opening_1.png-bf0cbf24b5c873a31570e53c10ef81d1.stex" ]
-dest_md5="308db4814cfd01d95df8449920a776b2"
+dest_files=[ "res://.import/Sink_18.png-d4b5935030d2a60c3238c95a411fbde3.stex" ]
+dest_md5="a860516e9e6a3ca3f3709fcc9cae5ccd"
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
