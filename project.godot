@@ -37,5 +37,5 @@ interact=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":
 
 [rendering]
 
-environment/default_clear_color=Color( 0.137255, 0.129412, 0.172549, 1 )
+environment/default_clear_color=Color( 0, 0, 0, 1 )
 environment/default_environment="res://default_env.tres"

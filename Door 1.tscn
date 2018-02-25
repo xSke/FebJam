@@ -1,0 +1,85 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Interactable.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Art/Export/Furniture/Door_1.png" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Area2D
+
+signal interacted
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+export(bool) var interactable = true setget _set_interactable
+onready var popup = get_node(\"IndicatorPosition/Indicator\")
+
+var showing = false
+
+func _ready():
+	popup.self_modulate.a = 0
+	
+func _process(delta):
+	if interactable:
+		var found_player = false
+		
+		for body in get_overlapping_bodies():
+			if body.is_in_group(\"player\"):
+				if Input.is_action_just_pressed(\"interact\"):
+					emit_signal(\"interacted\")
+				found_player = true
+		
+		# Checking again, emit_signal may have changed
+		if interactable:
+			if showing and not found_player:
+				print(\"Player gone, fading out\")
+				popup.get_node(\"AnimationPlayer\").play(\"Out\")
+				showing = false
+			if not showing and found_player:
+				print(\"Found player, fading in\")
+				popup.get_node(\"AnimationPlayer\").play(\"In\")
+				showing = true
+
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+		
+func _set_interactable(new):
+	if not new and showing:
+		popup.get_node(\"AnimationPlayer\").play(\"Out\")
+		showing = false
+	interactable = new
+	print(\"set_interactable \" + str(new))"
+
+[node name="Door Body" type="StaticBody2D"]
+
+position = Vector2( 409, 580 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="Interactable" parent="." index="0" instance=ExtResource( 1 )]
+
+script = SubResource( 1 )
+_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
+
+[node name="Door Sprite" type="Sprite" parent="." index="1"]
+
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="2"]
+
+position = Vector2( -1, 0 )
+build_mode = 0
+polygon = PoolVector2Array( 1, -15, 1, 15, 8, 15, 8, -15 )
+
+

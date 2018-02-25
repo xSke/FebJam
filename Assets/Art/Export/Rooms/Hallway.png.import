@@ -7,10 +7,10 @@ path="res://.import/Hallway.png-085d39bef85e116ee542e287f1afa6d6.stex"
 [deps]
 
 source_file="res://Assets/Art/Export/Rooms/Hallway.png"
-source_md5="cdbd6b8be7f479c6afd654e74786b395"
+source_md5="d17abd810b1c468923b0e943122af667"
 
 dest_files=[ "res://.import/Hallway.png-085d39bef85e116ee542e287f1afa6d6.stex" ]
-dest_md5="80dfe89504abe7428471777289f8d7ba"
+dest_md5="5ad4c587cb2146b4222ba6f21207b55f"
 
 [params]
 

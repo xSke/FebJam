@@ -1,6 +1,8 @@
 extends Node
 
 export(bool) var hasKey = false
+export(bool) var hasKey2 = false
+export(bool) var hasKey3 = false
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"

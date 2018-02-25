@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Sink_2.png-787c299a37009f9fb2d89714a9b16288.stex"
+path="res://.import/Tv_2.png-533431d347910c66ac8d53ae2de000a7.stex"
 
 [deps]
 
-source_file="res://Assets/Art/Export/Furniture/Sink_2.png"
-source_md5="a8f8800d42008e9c52047c46e56163e9"
+source_file="res://Assets/Art/Export/Furniture/Tv_2.png"
+source_md5="b5d932144ba07fda62f33100e0a17401"
 
-dest_files=[ "res://.import/Sink_2.png-787c299a37009f9fb2d89714a9b16288.stex" ]
-dest_md5="bdd7690424d56fe67901b510f6fe1ce2"
+dest_files=[ "res://.import/Tv_2.png-533431d347910c66ac8d53ae2de000a7.stex" ]
+dest_md5="7e71297810f2063129a48c4e4de688f7"
 
 [params]
 

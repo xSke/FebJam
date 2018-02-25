@@ -1,15 +1,17 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Art/Export/Rooms/Hallway.png" type="Texture" id=1]
-[ext_resource path="res://Assets/Art/Export/Objects/Brush.png" type="Texture" id=2]
-[ext_resource path="res://Throwable.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Assets/Art/Export/Objects/Soap.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Art/Export/Objects/Door Front.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Art/Export/Objects/Brush.png" type="Texture" id=3]
+[ext_resource path="res://Throwable.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Art/Export/Objects/Soap.png" type="Texture" id=5]
+[ext_resource path="res://Door 1.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Door 1.gd" type="Script" id=7]
 
 [node name="Hallway" type="Node" index="0"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="0"]
 
-editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -34,8 +36,17 @@ polygon = PoolVector2Array( 528, 565, 534, 565, 534, 498, 412, 498, 412, 564, 41
 position = Vector2( 476, 550 )
 texture = ExtResource( 1 )
 
+[node name="Door Front" type="Sprite" parent="StaticBody2D" index="3"]
+
+position = Vector2( 528, 565 )
+z_index = 4096
+texture = ExtResource( 2 )
+centered = false
+_sections_unfolded = [ "Offset", "Z Index" ]
+
 [node name="Brush" type="RigidBody2D" parent="." index="1"]
 
+editor/display_folded = true
 position = Vector2( 498, 573 )
 z_index = 10
 input_pickable = false
@@ -59,10 +70,10 @@ angular_damp = -1.0
 
 [node name="Brush" type="Sprite" parent="Brush" index="0"]
 
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Throwable" parent="Brush" index="1" instance=ExtResource( 3 )]
+[node name="Throwable" parent="Brush" index="1" instance=ExtResource( 4 )]
 
 [node name="IndicatorPosition" parent="Brush/Throwable/Interactable" index="0"]
 
@@ -79,6 +90,7 @@ polygon = PoolVector2Array( -4, -2, -4, 2, 4, 2, 4, -2 )
 
 [node name="Soap" type="RigidBody2D" parent="." index="2"]
 
+editor/display_folded = true
 position = Vector2( 484, 572 )
 z_index = 10
 input_pickable = false
@@ -103,10 +115,10 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Soap" type="Sprite" parent="Soap" index="0"]
 
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Throwable" parent="Soap" index="1" instance=ExtResource( 3 )]
+[node name="Throwable" parent="Soap" index="1" instance=ExtResource( 4 )]
 
 _sections_unfolded = [ "Material", "Transform" ]
 
@@ -123,8 +135,23 @@ polygon = PoolVector2Array( -2, -5, -2, 8, 2, 8, 2, -5 )
 build_mode = 0
 polygon = PoolVector2Array( -3, 2, 3, 2, 3, -3, -3, -3 )
 
+[node name="Door Body" parent="." index="3" instance=ExtResource( 6 )]
+
+position = Vector2( 529, 580 )
+script = ExtResource( 7 )
+
+[node name="IndicatorPosition" parent="Door Body/Interactable" index="0"]
+
+position = Vector2( -7, -15 )
+
+[node name="Collision" parent="Door Body/Interactable" index="1"]
+
+polygon = PoolVector2Array( -10, -14, 7, -13, 8, 15, -8, 16 )
+
 
 [editable path="Brush/Throwable"]
 [editable path="Brush/Throwable/Interactable"]
 [editable path="Soap/Throwable"]
 [editable path="Soap/Throwable/Interactable"]
+[editable path="Door Body"]
+[editable path="Door Body/Interactable"]

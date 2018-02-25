@@ -7,10 +7,10 @@ path="res://.import/Bathroom.png-1cd53da1f1a924bf1229eb57c09d95c2.stex"
 [deps]
 
 source_file="res://Assets/Art/Export/Rooms/Bathroom.png"
-source_md5="1d49758a0c286d2e93234e9e0a8d6745"
+source_md5="aac4a01b1ebd5831a0d27d1a5788c0a2"
 
 dest_files=[ "res://.import/Bathroom.png-1cd53da1f1a924bf1229eb57c09d95c2.stex" ]
-dest_md5="a50dd369af227b99ebdfdf0c0ab1fe7e"
+dest_md5="9b765e31f751298cd8e31008840e4e74"
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

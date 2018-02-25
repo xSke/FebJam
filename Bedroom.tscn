@@ -22,8 +22,9 @@
 [ext_resource path="res://Interactable.tscn" type="PackedScene" id=20]
 [ext_resource path="res://Assets/Art/Export/Furniture/Chest Open Front.png" type="Texture" id=21]
 [ext_resource path="res://Assets/Art/Export/Objects/Key.png" type="Texture" id=22]
-[ext_resource path="res://Assets/Art/Export/Furniture/Door_1.png" type="Texture" id=23]
-[ext_resource path="res://Thrown Book.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Door 1.tscn" type="PackedScene" id=23]
+[ext_resource path="res://Door 1.gd" type="Script" id=24]
+[ext_resource path="res://Thrown Book.tscn" type="PackedScene" id=25]
 
 [sub_resource type="GDScript" id=1]
 
@@ -150,30 +151,6 @@ func _i():
 
 [sub_resource type="GDScript" id=5]
 
-script/source = "extends StaticBody2D
-
-var closed = preload(\"res://Assets/Art/Export/Furniture/Door_1.png\")
-var open = preload(\"res://Assets/Art/Export/Furniture/Door_2.png\")
-
-var hasOpened = false
-
-func _ready():
-	$Interactable.connect(\"interacted\", self, \"_i\")
-
-func _process():
-	$Interactable.interactable = Vars.hasKey and not hasOpened
-
-func _i():
-	if hasOpened:
-		return
-		
-	$\"Door Sprite\".texture = open
-	$CollisionPolygon2D.disabled = true
-	
-	hasOpened = true"
-
-[sub_resource type="GDScript" id=7]
-
 script/source = "extends Area2D
 
 # class member variables go here, for example:
@@ -208,7 +185,7 @@ func _e(body):
 #	pass
 "
 
-[node name="Bedroom" type="Node2D" index="0"]
+[node name="Bedroom" type="Node2D"]
 
 [node name="Bedroom BG" type="StaticBody2D" parent="." index="0"]
 
@@ -339,45 +316,21 @@ position = Vector2( 0, -11 )
 
 polygon = PoolVector2Array( -5, -3, 5, -4, 5, 3, -6, 3 )
 
-[node name="Door Body" type="StaticBody2D" parent="." index="2"]
+[node name="Door Body" parent="." index="2" instance=ExtResource( 23 )]
 
-position = Vector2( 409, 580 )
-input_pickable = false
-collision_layer = 1
-collision_mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
-script = SubResource( 5 )
-
-[node name="Interactable" parent="Door Body" index="0" instance=ExtResource( 20 )]
-
-script = SubResource( 3 )
-_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
+script = ExtResource( 24 )
 
 [node name="IndicatorPosition" parent="Door Body/Interactable" index="0"]
 
-position = Vector2( -9, -14 )
+position = Vector2( -7, -15 )
 
 [node name="Collision" parent="Door Body/Interactable" index="1"]
 
-polygon = PoolVector2Array( -1, -16, -15, -16, -15, 15, -1, 15 )
+polygon = PoolVector2Array( -1, -12, -9, -12, -10, 15, 1, 14, 0, -12 )
 
-[node name="Door Sprite" type="Sprite" parent="Door Body" index="1"]
+[node name="Thrown Book" parent="." index="3" instance=ExtResource( 25 )]
 
-texture = ExtResource( 23 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Door Body" index="2"]
-
-position = Vector2( -1, 0 )
-build_mode = 0
-polygon = PoolVector2Array( 1, -15, 1, 15, 8, 15, 8, -15 )
-
-[node name="Thrown Book" parent="." index="3" instance=ExtResource( 24 )]
-
-[node name="Thrown Book2" parent="." index="4" instance=ExtResource( 24 )]
+[node name="Thrown Book2" parent="." index="4" instance=ExtResource( 25 )]
 
 visible = false
 
@@ -395,7 +348,7 @@ angular_damp = 1.0
 collision_mask = 2
 audio_bus_override = false
 audio_bus_name = "Master"
-script = SubResource( 7 )
+script = SubResource( 5 )
 _sections_unfolded = [ "Collision" ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" index="0"]
@@ -406,6 +359,7 @@ polygon = PoolVector2Array( 404, 594, 381, 594, 382, 539, 404, 538 )
 
 [editable path="Chest Body/Interactable"]
 [editable path="Chest Body/Key/Interactable"]
+[editable path="Door Body"]
 [editable path="Door Body/Interactable"]
 [editable path="Thrown Book2"]
 [editable path="Thrown Book2/Throwable"]
