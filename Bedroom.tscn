@@ -139,9 +139,9 @@ func _ready():
 	
 func _i():
 	Vars.hasKey = true
-	
 	queue_free()
 	get_parent().remove_child(self)
+
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
@@ -185,11 +185,10 @@ func _e(body):
 #	pass
 "
 
-[node name="Bedroom" type="Node2D"]
+[node name="Bedroom" type="Node2D" index="0"]
 
 [node name="Bedroom BG" type="StaticBody2D" parent="." index="0"]
 
-editor/display_folded = true
 position = Vector2( 208, 550 )
 input_pickable = false
 collision_layer = 1
@@ -199,11 +198,11 @@ constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bedroom BG" index="0"]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Bedroom BG" index="0"]
 
 visible = false
 build_mode = 0
-polygon = PoolVector2Array( -197, 34, -158, 34, -156, 36, -156, 42, 208, 42, 208, 50, -208, 50, -208, 21, -208, -50, -197, -50 )
+polygon = PoolVector2Array( 200, 15, 208, 15, 208, -50, 200, -50 )
 
 [node name="Bedroom" type="Sprite" parent="Bedroom BG" index="1"]
 
@@ -212,19 +211,18 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Bedroom BG" index="2"]
-
-visible = false
-build_mode = 0
-polygon = PoolVector2Array( 200, 15, 208, 15, 208, -50, 200, -50 )
-
-[node name="Door Front" type="Sprite" parent="Bedroom BG" index="3"]
+[node name="Door Front" type="Sprite" parent="Bedroom BG" index="2"]
 
 position = Vector2( 200, 15 )
 z_index = 100
 texture = ExtResource( 2 )
 centered = false
 _sections_unfolded = [ "Offset", "Z Index" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bedroom BG" index="3"]
+
+build_mode = 0
+polygon = PoolVector2Array( -197, 34, -158, 34, -156, 36, -156, 42, 208, 42, 208, 50, -208, 50, -208, 21, -208, -50, -197, -50 )
 
 [node name="Chest Body" type="StaticBody2D" parent="." index="1"]
 
@@ -247,6 +245,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Interactable" parent="Chest Body" index="1" instance=ExtResource( 20 )]
 
+editor/display_folded = true
 position = Vector2( 1, -18 )
 script = SubResource( 3 )
 
@@ -304,6 +303,7 @@ polygon = PoolVector2Array( -4, -2, 5, -2, 5, 2, -4, 2 )
 
 [node name="Interactable" parent="Chest Body/Key" index="2" instance=ExtResource( 20 )]
 
+editor/display_folded = true
 script = SubResource( 3 )
 _sections_unfolded = [ "Collision", "Transform" ]
 interactable = false
@@ -330,9 +330,12 @@ polygon = PoolVector2Array( -1, -12, -9, -12, -10, 15, 1, 14, 0, -12 )
 
 [node name="Thrown Book" parent="." index="3" instance=ExtResource( 25 )]
 
+position = Vector2( 240, 550 )
+
 [node name="Thrown Book2" parent="." index="4" instance=ExtResource( 25 )]
 
 visible = false
+position = Vector2( 221, 534 )
 
 [node name="Interactable" parent="Thrown Book2/Throwable" index="0"]
 

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PerspectiveJam.wav-bc23efdf680277b23ca039c0e9bd808b.sample"
+
+[deps]
+
+source_file="res://Assets/Music/PerspectiveJam.wav"
+source_md5="b8f6f76b4365c6805cf9ac502c84aea3"
+
+dest_files=[ "res://.import/PerspectiveJam.wav-bc23efdf680277b23ca039c0e9bd808b.sample" ]
+dest_md5="c3de5881d6cb57cc7ada85adc199a86f"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

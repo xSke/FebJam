@@ -8,7 +8,7 @@
 [ext_resource path="res://Door 1.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Door 1.gd" type="Script" id=7]
 
-[node name="Hallway" type="Node" index="0"]
+[node name="Hallway" type="Node"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="0"]
 
@@ -51,7 +51,7 @@ position = Vector2( 498, 573 )
 z_index = 10
 input_pickable = false
 collision_layer = 4
-collision_mask = 1
+collision_mask = 5
 mode = 3
 mass = 1.0
 friction = 1.0
@@ -67,6 +67,7 @@ linear_velocity = Vector2( 0, 0 )
 linear_damp = -1.0
 angular_velocity = 0.0
 angular_damp = -1.0
+_sections_unfolded = [ "Collision" ]
 
 [node name="Brush" type="Sprite" parent="Brush" index="0"]
 
@@ -95,7 +96,7 @@ position = Vector2( 484, 572 )
 z_index = 10
 input_pickable = false
 collision_layer = 4
-collision_mask = 1
+collision_mask = 5
 mode = 3
 mass = 1.0
 friction = 1.0
@@ -111,7 +112,7 @@ linear_velocity = Vector2( 0, 0 )
 linear_damp = -1.0
 angular_velocity = 0.0
 angular_damp = -1.0
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Soap" type="Sprite" parent="Soap" index="0"]
 

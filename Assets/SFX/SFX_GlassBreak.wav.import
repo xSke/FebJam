@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SFX_GlassBreak.wav-20fe09f784a63ad0b35ba9861f75f51d.sample"
+
+[deps]
+
+source_file="res://Assets/SFX/SFX_GlassBreak.wav"
+source_md5="de961a5e950e51652f46e467f6a1d5c4"
+
+dest_files=[ "res://.import/SFX_GlassBreak.wav-20fe09f784a63ad0b35ba9861f75f51d.sample" ]
+dest_md5="a9c51d12796077f41c8c0bff95e5d765"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

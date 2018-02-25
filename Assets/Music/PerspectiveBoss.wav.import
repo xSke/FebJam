@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PerspectiveBoss.wav-1101244d419d3a28f064ff39ecf3d023.sample"
+
+[deps]
+
+source_file="res://Assets/Music/PerspectiveBoss.wav"
+source_md5="1643c4be0d5eb763994d45dd75f31316"
+
+dest_files=[ "res://.import/PerspectiveBoss.wav-1101244d419d3a28f064ff39ecf3d023.sample" ]
+dest_md5="1aeca783f5447efdc68cc3a51a1a35aa"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

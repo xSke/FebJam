@@ -83,12 +83,12 @@ func throw():
 #	pass
 "
 
-[node name="Thrown Book" type="RigidBody2D" index="0"]
+[node name="Thrown Book" type="RigidBody2D"]
 
 position = Vector2( 250, 572 )
 input_pickable = false
 collision_layer = 4
-collision_mask = 1
+collision_mask = 5
 mode = 0
 mass = 1.0
 friction = 1.0

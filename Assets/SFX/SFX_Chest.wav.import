@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SFX_Chest.wav-5c3b35f6a1ff723974228098333c1b9a.sample"
+
+[deps]
+
+source_file="res://Assets/SFX/SFX_Chest.wav"
+source_md5="33d9dc46fd441eedff836d439a841fd4"
+
+dest_files=[ "res://.import/SFX_Chest.wav-5c3b35f6a1ff723974228098333c1b9a.sample" ]
+dest_md5="de03bf05c28eeac0d587fc7a8b9892f3"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

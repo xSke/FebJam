@@ -8,7 +8,7 @@ var hasOpened = false
 func _ready():
 	$Interactable.connect("interacted", self, "_i")
 
-func _process():
+func _process(delta):
 	$Interactable.interactable = Vars.hasKey and not hasOpened
 
 func _i():

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SFX_Door.wav-d002fc3740f91fe9c4775d2150c873f1.sample"
+
+[deps]
+
+source_file="res://Assets/SFX/SFX_Door.wav"
+source_md5="4e12b53168ee77c4eed3338162859360"
+
+dest_files=[ "res://.import/SFX_Door.wav-d002fc3740f91fe9c4775d2150c873f1.sample" ]
+dest_md5="34b797a896f64fdc35bae4f7438c3382"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
