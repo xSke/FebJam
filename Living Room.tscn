@@ -106,7 +106,7 @@ func _i():
 	
 	hasOpened = true"
 
-[node name="Living Room" type="Node2D" index="0"]
+[node name="Living Room" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="0"]
 

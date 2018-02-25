@@ -1,0 +1,32 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/Ghost Concept.png-6bc55fef511a965423209ac693105c70.stex"
+
+[deps]
+
+source_file="res://Assets/Art/Export/Concepts/Ghost Concept.png"
+source_md5="d66df4ed8f0f1de10e154aa38a7cf0c0"
+
+dest_files=[ "res://.import/Ghost Concept.png-6bc55fef511a965423209ac693105c70.stex" ]
+dest_md5="78e48cb33ece54ae16f961a6d85c1480"
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0
