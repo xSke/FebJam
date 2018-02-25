@@ -1,0 +1,292 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Assets/Art/Export/Rooms/Living Room.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Art/Export/Objects/Door Front.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Art/Export/Objects/Key.png" type="Texture" id=3]
+[ext_resource path="res://Interactable.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Art/Export/Furniture/Tv_1.png" type="Texture" id=5]
+[ext_resource path="res://Throwable.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Art/Export/Objects/Brush.png" type="Texture" id=7]
+[ext_resource path="res://Door 1.tscn" type="PackedScene" id=8]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends RigidBody2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+var broken = preload(\"res://Assets/Art/Export/Furniture/Tv_2.png\")
+var shard = preload(\"res://Shard.tscn\")
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	connect(\"body_entered\", self, \"_e\")
+	pass
+	
+var hit = false
+
+func _e(body):
+	if hit:
+		return
+	if body.get_parent().is_in_group(\"player\"):
+		return
+		
+		
+	hit = true
+	
+	$Sprite.texture = broken
+	
+	for i in range(6):
+		var s = shard.instance()
+		add_child(s)
+		
+		s.position = Vector2(rand_range(-10, 10), rand_range(-10, 10))
+		s.linear_velocity = Vector2(rand_range(-70, 70), rand_range(-50, -100))
+		
+	$Key.z_index = 10
+	$Key.mode = RigidBody2D.MODE_RIGID
+	$Key.apply_impulse(Vector2(0, 0), Vector2(-50, -120))
+	$Key.visible = true
+	$Key/Interactable.interactable = true
+
+	
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends RigidBody2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	$Interactable.connect(\"interacted\", self, \"_i\")
+
+func _i():
+	Vars.hasKey3 = true
+	get_parent().remove_child(self)
+	queue_free()
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
+[sub_resource type="GDScript" id=3]
+
+script/source = "extends StaticBody2D
+
+var closed = preload(\"res://Assets/Art/Export/Furniture/Door_1.png\")
+var open = preload(\"res://Assets/Art/Export/Furniture/Door_2.png\")
+
+var hasOpened = false
+
+func _ready():
+	$Interactable.connect(\"interacted\", self, \"_i\")
+
+func _process():
+	$Interactable.interactable = Vars.hasKey3 and not hasOpened
+
+func _i():
+	if hasOpened:
+		return
+		
+	$\"Door Sprite\".texture = open
+	$CollisionPolygon2D.disabled = true
+	
+	hasOpened = true"
+
+[node name="Living Room" type="Node2D" index="0"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="0"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="Living Room" type="Sprite" parent="StaticBody2D" index="0"]
+
+position = Vector2( 166, 58 )
+texture = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" index="1"]
+
+visible = false
+build_mode = 0
+polygon = PoolVector2Array( 6, 100, 326, 100, 326, 108, 6, 108 )
+
+[node name="Door Front" type="Sprite" parent="StaticBody2D" index="2"]
+
+position = Vector2( 318, 73 )
+z_index = 4096
+texture = ExtResource( 2 )
+centered = false
+_sections_unfolded = [ "Offset", "Z Index" ]
+
+[node name="TV" type="RigidBody2D" parent="." index="1"]
+
+position = Vector2( 237, 76 )
+input_pickable = false
+collision_layer = 4
+collision_mask = 1
+mode = 3
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 100
+contact_monitor = true
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = SubResource( 1 )
+_sections_unfolded = [ "Collision" ]
+
+[node name="Key" type="RigidBody2D" parent="TV" index="0"]
+
+position = Vector2( -1, 4 )
+input_pickable = false
+collision_layer = 8
+collision_mask = 1
+mode = 3
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = SubResource( 2 )
+_sections_unfolded = [ "Collision" ]
+
+[node name="Key" type="Sprite" parent="TV/Key" index="0"]
+
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TV/Key" index="1"]
+
+build_mode = 0
+polygon = PoolVector2Array( -4, -1, 5, -1, 4, 3, -4, 2 )
+
+[node name="Interactable" parent="TV/Key" index="2" instance=ExtResource( 4 )]
+
+interactable = false
+
+[node name="IndicatorPosition" parent="TV/Key/Interactable" index="0"]
+
+position = Vector2( 1, -15 )
+
+[node name="Collision" parent="TV/Key/Interactable" index="1"]
+
+polygon = PoolVector2Array( -8, -9, -9, 6, 12, 6, 11, -8 )
+
+[node name="Sprite" type="Sprite" parent="TV" index="1"]
+
+texture = ExtResource( 5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TV" index="2"]
+
+build_mode = 0
+polygon = PoolVector2Array( -19, -12, 19, -12, 19, 14, -19, 14 )
+
+[node name="Brush (backup)" type="RigidBody2D" parent="." index="2"]
+
+position = Vector2( 195, 62 )
+input_pickable = false
+collision_layer = 4
+collision_mask = 5
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+_sections_unfolded = [ "Collision" ]
+
+[node name="Throwable" parent="Brush (backup)" index="0" instance=ExtResource( 6 )]
+
+editor/display_folded = true
+
+[node name="IndicatorPosition" parent="Brush (backup)/Throwable/Interactable" index="0"]
+
+position = Vector2( 0, -14 )
+
+[node name="Collision" parent="Brush (backup)/Throwable/Interactable" index="1"]
+
+polygon = PoolVector2Array( -6, -4, -6, 6, 7, 6, 7, -4 )
+
+[node name="Brush" type="Sprite" parent="Brush (backup)" index="1"]
+
+texture = ExtResource( 7 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Brush (backup)" index="2"]
+
+build_mode = 0
+polygon = PoolVector2Array( -5, -2, -5, 2, 4, 2, 4, -2 )
+
+[node name="Dooor" parent="." index="3" instance=ExtResource( 8 )]
+
+position = Vector2( 318, 91 )
+script = SubResource( 3 )
+
+[node name="Interactable" parent="Dooor" index="0"]
+
+position = Vector2( 3, -3 )
+
+[node name="IndicatorPosition" parent="Dooor/Interactable" index="0"]
+
+position = Vector2( -10, -8 )
+
+[node name="Collision" parent="Dooor/Interactable" index="1"]
+
+polygon = PoolVector2Array( 5, -8, -14, -9, -15, 18, 5, 18 )
+
+[node name="CollisionPolygon2D" parent="Dooor" index="2"]
+
+visible = false
+
+
+[editable path="TV/Key/Interactable"]
+[editable path="Brush (backup)/Throwable"]
+[editable path="Brush (backup)/Throwable/Interactable"]
+[editable path="Dooor"]
+[editable path="Dooor/Interactable"]

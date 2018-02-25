@@ -10,7 +10,7 @@ source_file="res://Assets/Art/Export/Objects/Glass_Shard_3.png"
 source_md5="64bb66a605cf4ed6577c182de75893d4"
 
 dest_files=[ "res://.import/Glass_Shard_3.png-9be248899be7318157a8a11066002a3e.stex" ]
-dest_md5="347c3adb2e42a527f69db47976432e80"
+dest_md5="7d22a6d45da3790f6a56f84dbc0978bd"
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

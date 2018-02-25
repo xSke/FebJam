@@ -83,7 +83,7 @@ func throw():
 #	pass
 "
 
-[node name="Thrown Book" type="RigidBody2D"]
+[node name="Thrown Book" type="RigidBody2D" index="0"]
 
 position = Vector2( 250, 572 )
 input_pickable = false

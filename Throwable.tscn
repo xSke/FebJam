@@ -82,7 +82,7 @@ func throw():
 #	pass
 "
 
-[node name="Throwable" type="Node2D"]
+[node name="Throwable" type="Node2D" index="0"]
 
 script = SubResource( 9 )
 _sections_unfolded = [ "Transform" ]
